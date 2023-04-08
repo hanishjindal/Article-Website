@@ -1,6 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 
-function Login() {
+function Login({ email, handleEmailChange, password, handlePasswordChange }) {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleCheckboxChange = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <>
       <div className="flex flex-col my-2">
@@ -11,6 +17,8 @@ function Login() {
           type="email"
           name="email"
           id="email"
+          value={email}
+          onChange={handleEmailChange}
           className="px-2 py-1 min-w-[300px] border-2 border-gray-400"
         />
       </div>
@@ -19,17 +27,25 @@ function Login() {
           Password
         </label>
         <input
-          type="password"
+          type={showPassword ? "text" : "password"}
           name="password"
           id="password"
+          value={password}
+          onChange={handlePasswordChange}
           className="px-2 py-1 min-w-[300px] border-2 border-gray-400"
         />
       </div>
-      <div className="w-full flex items-center mb-2">
+      <div className="min-w-[300px] flex items-center mb-2">
         <label htmlFor="checkbox" className="text-xs mr-2  italic">
           Show Password
         </label>
-        <input type="checkbox" name="checkbox" id="checkbox" />
+        <input
+          type="checkbox"
+          name="checkbox"
+          id="checkbox"
+          checked={showPassword}
+          onChange={handleCheckboxChange}
+        />
       </div>
     </>
   );

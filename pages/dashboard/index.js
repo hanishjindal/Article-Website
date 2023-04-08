@@ -1,7 +1,6 @@
-import React from "react";
-
+import Dashboard from "@/components/dashboard/Dashboard";
 function index() {
-  return <div>index</div>;
+  return <Dashboard />;
 }
 
 export default index;

@@ -16,9 +16,9 @@ function Footer() {
           <div className="flex justify-center cursor-pointer p-2 hover:text-xl w-8">
             <Link href="/about">About</Link>
           </div>
-          <div className="flex justify-center cursor-pointer p-2 hover:text-xl w-8">
+          {/* <div className="flex justify-center cursor-pointer p-2 hover:text-xl w-8">
             <Link href="/contact">Contact</Link>
-          </div>
+          </div> */}
         </div>
         <div className="hidden md:block">
           <p>

@@ -4,9 +4,9 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <main className="">
+    <main className="scroll-smooth">
       <Slider />
-      <ArticleCard />
+      <ArticleCard title="Top Articles" />
     </main>
   );
 }

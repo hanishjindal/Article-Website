@@ -17,7 +17,8 @@ const Navbar = () => {
             }}
           >
             <Link href="/">
-              <img className="h-8 w-auto" src="/next.svg" alt="Logo" />
+              {/* <img className="h-8 w-auto" src="/next.svg" alt="Logo" /> */}
+              <h1 className="h-8 w-auto text-3xl font-semibold">Article Co.</h1>
             </Link>
           </div>
           <div className="hidden sm:ml-6 sm:flex sm:items-center">
@@ -39,12 +40,12 @@ const Navbar = () => {
             >
               About
             </Link>
-            <Link
+            {/* <Link
               href="/contact"
               className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-200"
             >
               Contact
-            </Link>
+            </Link> */}
           </div>
           <div className="mr-2 flex sm:hidden">
             <button
@@ -93,6 +94,7 @@ const Navbar = () => {
               onSubmit={(e) => {
                 e.preventDefault();
                 const searchQuery = e.target.search.value;
+                e.target.search.value = "";
                 Router.push(`/article?search=${searchQuery}`);
               }}
             >

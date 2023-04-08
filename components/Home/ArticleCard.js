@@ -1,7 +1,8 @@
 import Image from "next/image";
+import Link from "next/link";
 import React, { useState } from "react";
 
-function ArticleCard() {
+function ArticleCard({ title, owner }) {
   const [article, setArticle] = useState([
     {
       title: "1st Article",
@@ -35,13 +36,23 @@ function ArticleCard() {
   return (
     <div className="w-full select-none">
       <h1 className="w-full flex justify-center items-center mt-[40px] text-4xl font-semibold mb-[30px]">
-        Articles
+        {title}
       </h1>
+
+      {owner && (
+        <div className="flex justify-center">
+          <Link href="/dashboard/add">
+            <button className="text-center text-xl mb-8 bg-green-500 px-6 py-4 font-bold rounded-md text-slate-100 hover:text-white cursor-pointer duration-300">
+              Add new article
+            </button>
+          </Link>
+        </div>
+      )}
       <div className="m-auto grid centerGrid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-[2vw] lg:px-[5vw]">
         {article.map((card, index) => {
           return (
             <div
-              className="flex flex-col flex-wrap items-center w-[70vw] md:w-[40vw] lg:w-[26vw] p-[40px] mb-8 shadow-md hover:shadow-xl duration-300 shadow-gray-400"
+              className="flex flex-col flex-wrap items-center w-[85vw] md:w-[43vw] lg:w-[26vw] p-[40px] mb-8 shadow-md hover:shadow-xl duration-300 shadow-gray-400"
               key={index}
             >
               <h1 className="text-2xl font-semibold">{card.title}</h1>
@@ -58,12 +69,29 @@ function ArticleCard() {
               </div>
               <p className="text-justify">{card.body.substring(0, 200)}...</p>
               <div className="w-full mt-3.5">
-                <button
-                  className="bg-indigo-800 text-white
+                {!owner ? (
+                  <button
+                    className="bg-indigo-800 text-white
                 px-4 py-2 rounded-md"
-                >
-                  Read more...
-                </button>
+                  >
+                    Read more...
+                  </button>
+                ) : (
+                  <div className="flex justify-between">
+                    <button
+                      className="bg-indigo-800 text-white
+                px-4 py-2 rounded-md"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="bg-red-600 text-white
+                px-4 py-2 rounded-md"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           );

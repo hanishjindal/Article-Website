@@ -1,6 +1,13 @@
 import React from "react";
 
-function Signup() {
+function Signup({
+  email,
+  handleEmailChange,
+  password,
+  handlePasswordChange,
+  confirmPassword,
+  handleConfirmPasswordChange,
+}) {
   return (
     <>
       <div className="flex flex-col my-2">
@@ -11,6 +18,8 @@ function Signup() {
           type="email"
           name="email"
           id="email"
+          value={email}
+          onChange={handleEmailChange}
           className="px-2 py-1 min-w-[300px] border-2 border-gray-400"
         />
       </div>
@@ -22,6 +31,8 @@ function Signup() {
           type="password"
           name="password"
           id="password"
+          value={password}
+          onChange={handlePasswordChange}
           className="px-2 py-1 min-w-[300px] border-2 border-gray-400"
         />
       </div>
@@ -33,6 +44,8 @@ function Signup() {
           type="password"
           name="confirmPassword"
           id="confirmPassword"
+          value={confirmPassword}
+          onChange={handleConfirmPasswordChange}
           className="px-2 py-1 min-w-[300px] border-2 border-gray-400"
         />
       </div>
