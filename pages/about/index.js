@@ -10,7 +10,7 @@ function index() {
           src="/image.png"
           alt=""
           width={150}
-          height={100}
+          height={80}
           className="border-4 border-grey-700 mr-10 md:mr-20 rounded-xl "
         />
         <div className="flex flex-col mt-5">
