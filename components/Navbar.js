@@ -164,19 +164,23 @@ const Navbar = () => {
             />
           </div>
         </form>
-        <div className="px-2 pt-2 pb-3 space-y-1 flex justify-around">
-          <button
-            className="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 w-48"
-            onClick={toggle}
-          >
-            <Link href="/login">Log in</Link>
-          </button>
-          <button
-            className="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 w-40"
-            onClick={toggle}
-          >
-            <Link href="/dashboard">Dashboard</Link>
-          </button>
+        <div className="px-2 pt-2 pb-3 flex justify-around">
+          <Link href="/login">
+            <button
+              className="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 w-44"
+              onClick={toggle}
+            >
+              Log in
+            </button>
+          </Link>
+          <Link href="/dashboard">
+            <button
+              className="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 w-44"
+              onClick={toggle}
+            >
+              Dashboard
+            </button>
+          </Link>
         </div>
       </div>
     </nav>

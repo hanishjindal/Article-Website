@@ -35,7 +35,7 @@ function Login({ email, handleEmailChange, password, handlePasswordChange }) {
           className="px-2 py-1 min-w-[300px] border-2 border-gray-400"
         />
       </div>
-      <div className="min-w-[300px] flex items-center mb-2">
+      <div className="min-w-[300px] flex items-center mb-2 mt-[1px]">
         <label htmlFor="checkbox" className="text-xs mr-2  italic">
           Show Password
         </label>
