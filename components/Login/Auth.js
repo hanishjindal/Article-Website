@@ -58,7 +58,7 @@ function Auth() {
 
   return (
     <div className="w-full flex justify-center items-center p-20">
-      <div className="w-[350px] md:w-[400px] flex flex-col items-center shadow-md duration-300 shadow-gray-400 p-10">
+      <div className="w-[340px] md:w-[400px] flex flex-col items-center shadow-md duration-300 shadow-gray-400 p-10">
         <h2 className="text-3xl m-4 font-bold font-sans">{authType}</h2>
         {authType === "Login" ? (
           <Login

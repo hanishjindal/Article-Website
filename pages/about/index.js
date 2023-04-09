@@ -18,7 +18,7 @@ function index() {
           <span className="italic">Developer</span>
         </div>
       </div>
-      <p>
+      <p className="text-justify">
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor, odit
         blanditiis suscipit sunt enim et corporis veniam sit architecto
         voluptatum. Minus doloremque eligendi aliquid pariatur sit ratione sunt
