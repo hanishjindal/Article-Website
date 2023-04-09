@@ -3,7 +3,7 @@ import React from "react";
 
 function index() {
   return (
-    <div className="flex flex-col items-center p-20">
+    <div className="flex flex-col items-center p-10 md:p-20">
       <h1 className="text-8xl mb-5">Article Co.</h1>
       <div className="flex my-8">
         <Image

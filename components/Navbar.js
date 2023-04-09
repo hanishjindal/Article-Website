@@ -164,14 +164,20 @@ const Navbar = () => {
             />
           </div>
         </form>
-        {/* <div className="px-2 pt-2 pb-3 space-y-1">
+        <div className="px-2 pt-2 pb-3 space-y-1 flex justify-around">
           <button
-            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            className="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 w-48"
             onClick={toggle}
           >
             <Link href="/login">Log in</Link>
           </button>
-        </div> */}
+          <button
+            className="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 w-48"
+            onClick={toggle}
+          >
+            <Link href="/dashboard">Dashboard</Link>
+          </button>
+        </div>
       </div>
     </nav>
   );

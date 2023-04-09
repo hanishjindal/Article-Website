@@ -63,6 +63,14 @@ function AddArticle() {
       return;
     }
     setError();
+    const tag = tags.split(",").map((tg) => tg.trim());
+    const newArticle = {
+      title,
+      author,
+      tags: tag,
+      image,
+      article,
+    };
   };
   return (
     <div className="flex justify-center p-5 px-10 lg:px-40 select-none">
