@@ -1,13 +1,24 @@
 import Image from "next/image";
-import { useState } from "react";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
-function AddArticle() {
+function AddArticle(props) {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [tags, setTags] = useState("");
   const [image, setImage] = useState();
   const [article, setArticle] = useState("");
   const [error, setError] = useState();
+  const router = useRouter();
+
+  useEffect(() => {
+    setTitle(props.title);
+    setAuthor(props.author);
+    const tag = props.tags;
+    if (tag !== undefined) setTags(tag.join(", "));
+    setImage(props.image);
+    setArticle(props.article);
+  }, [props]);
 
   const handleTitleChange = (e) => {
     setError();
@@ -64,19 +75,53 @@ function AddArticle() {
     }
     setError();
     const tag = tags.split(",").map((tg) => tg.trim());
+    const currentDate = new Date();
+    const formattedDate =
+      props.date === undefined
+        ? `${currentDate.getDate()}/${
+            currentDate.getMonth() + 1
+          }/${currentDate.getFullYear()}`
+        : props.date;
     const newArticle = {
       title,
       author,
       tags: tag,
       image,
+      date: formattedDate,
       article,
     };
+    let articleList = localStorage.getItem("articleList");
+    articleList = JSON.parse(articleList);
+    if (props.id) {
+      articleList[props.id - 1] = newArticle;
+    } else {
+      if (articleList === null) {
+        // If no articles exist in localStorage, create a new array with the new article
+        articleList = [newArticle];
+      } else {
+        // If articles exist in localStorage, parse the JSON string into an array
+        // Append the new article to the existing array
+        articleList.push(newArticle);
+      }
+      // Store the updated array in localStorage
+    }
+    localStorage.setItem("articleList", JSON.stringify(articleList));
+    setTitle("");
+    setAuthor("");
+    setTags("");
+    setImage(undefined);
+    setArticle("");
+    if (props.id) {
+      router.push(`/article/${props.id}`);
+    } else {
+      router.push("/");
+    }
   };
   return (
     <div className="flex justify-center p-5 px-10 lg:px-40 select-none">
       <div className="w-[100%]">
         <h1 className="text-2xl font-bold text-center mt-6 mb-4">
-          Add new Article
+          {props.id ? "Edit Article" : "Add new article"}
         </h1>
         <div className="flex flex-col items-center">
           <div className="w-full flex flex-col my-2">
@@ -192,7 +237,7 @@ function AddArticle() {
               className="w-40 bg-blue-800 opacity-90 hover:opacity-100 duration-300 font-semibold hover:tracking-wide text-white p-2 rounded-sm cursor-pointer m-8"
               onClick={handleSubmit}
             >
-              Submit
+              {props.id ? "Save Changes" : "Submit"}
             </button>
           </div>
         </div>

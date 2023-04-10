@@ -7,7 +7,7 @@ const Navbar = () => {
   const toggle = () => setIsOpen(!isOpen);
 
   return (
-    <nav className="bg-white shadow-lg">
+    <nav className="bg-white shadow-lg select-none">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div
@@ -111,12 +111,17 @@ const Navbar = () => {
                 />
               </div>
             </form>
-            <button className="ml-3 flex-shrink-0 px-4 py-2 border rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">
-              <Link href="/login">Log in</Link>
-            </button>
-            <button className="ml-3 flex-shrink-0 px-4 py-2 border rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">
-              <Link href="/dashboard">Dashboard</Link>
-            </button>
+            <Link
+              href="/login"
+              className="ml-3 flex-shrink-0 px-4 py-2 border rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
+            >
+              <button>Log in</button>
+            </Link>{" "}
+            <Link href="/dashboard">
+              <button className="ml-3 flex-shrink-0 px-4 py-2 border rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">
+                Dashboard
+              </button>
+            </Link>
           </div>
         </div>
       </div>

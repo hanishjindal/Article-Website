@@ -1,6 +1,8 @@
 import React from "react";
 
 function Signup({
+  fullName,
+  handleFullNameChange,
   email,
   handleEmailChange,
   password,
@@ -11,6 +13,19 @@ function Signup({
   return (
     <>
       <div className="flex flex-col my-2">
+        <label htmlFor="fullname" className="text-sm italic">
+          Full Name
+        </label>
+        <input
+          type="text"
+          name="fullname"
+          id="fullname"
+          value={fullName}
+          onChange={handleFullNameChange}
+          className="px-2 py-1 min-w-[300px] border-2 border-gray-400"
+        />
+      </div>
+      <div className="flex flex-col">
         <label htmlFor="email" className="text-sm italic">
           Email
         </label>

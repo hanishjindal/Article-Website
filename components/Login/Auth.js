@@ -4,10 +4,14 @@ import Signup from "./Signup";
 
 function Auth() {
   const [authType, setAuthType] = useState("Login");
+  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+  const handleFullNameChange = (event) => {
+    setFullName(event.target.value);
+  };
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
   };
@@ -28,6 +32,14 @@ function Auth() {
     }
   };
   const handleAuth = () => {
+    const nameregex = /^[a-zA-Z]+([a-zA-Z ]*[a-zA-Z])?$/;
+    if (
+      authType === "Sign Up" &&
+      (fullName.length < 3 || !nameregex.test(fullName))
+    ) {
+      setError("Invalid name");
+      return;
+    }
     // Email format validation using regular expression
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
@@ -50,11 +62,55 @@ function Auth() {
         setError("Password do not match");
         return;
       }
+      // handleSignupAuth();
+    } else {
+      // handleLoginAuth();
     }
 
     // Authentication logic goes here
     setError("");
   };
+
+  // const handleSignupAuth = async () => {
+  //   try {
+  //     const response = await fetch("/api/auth/signup", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({ fullName, email, password, confirmPassword }),
+  //     });
+
+  //     if (!response.ok) {
+  //       throw new Error("Signup failed");
+  //     }
+
+  //     const data = await response.json();
+  //     if (data.message === "User created") {
+  //       localStorage.setItem("user", data.id);
+  //     }
+  //   } catch (err) {
+  //     console.error(err);
+  //     setError("Server error");
+  //   }
+  // };
+  // const handleLoginAuth = async () => {
+  //   const response = await fetch("/api/auth/login", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({ email, password }),
+  //   });
+  //   const data = await response.json();
+  //   if (response.ok) {
+  //     console.log(data.message, data.id); // Login successful
+  //     // Redirect to dashboard or home page
+  //   } else {
+  //     console.log(data.error); // Invalid email or password
+  //     // Display error message to user
+  //   }
+  // };
 
   return (
     <div className="w-full flex justify-center items-center p-20">
@@ -69,6 +125,8 @@ function Auth() {
           />
         ) : (
           <Signup
+            fullName={fullName}
+            handleFullNameChange={handleFullNameChange}
             email={email}
             handleEmailChange={handleEmailChange}
             password={password}
