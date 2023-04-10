@@ -1,26 +1,37 @@
 import ViewArticle from "@/components/ArticleListing/ViewArticle";
 import { useRouter } from "next/router";
-import React, { useMemo } from "react";
+import { useEffect, useState } from "react";
 
 function ArticleDetail() {
   const router = useRouter();
+  const [article, setArticle] = useState([]);
   const id = Number(router.query.articleID);
-  const articleList = useMemo(
-    () => JSON.parse(localStorage.getItem("articleList")) || [],
-    []
-  );
-  const article = articleList[id - 1] || {};
-  const { title, author, tags = [], image, date, article: content } = article;
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      if (article) {
+        clearInterval(intervalId);
+      }
+
+      const articleList = JSON.parse(localStorage.getItem("articleList"));
+      const temp = articleList[id - 1] || {};
+      setArticle(temp);
+    }, 200);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [article]);
 
   return (
     <div>
       <ViewArticle
-        title={title}
-        author={author}
-        date={date}
-        tags={tags}
-        image={image}
-        article={content}
+        title={article.title}
+        author={article.author}
+        date={article.date}
+        tags={article.tags}
+        image={article.image}
+        article={article.content}
       />
     </div>
   );
