@@ -4,7 +4,7 @@ import ReactHtmlParser from "react-html-parser";
 
 function ViewArticle({ title, author, date, tags, image, article }) {
   return (
-    <div className="flex flex-col mt-10 items-center">
+    <div className="flex flex-col mt-10 items-center min-h-[60vh]">
       <div className="flex flex-col items-center">
         <h1 className="w-[80vw] text-5xl mt-8">{title}</h1>
         <div className="w-[80vw] text-sm mt-1">
@@ -34,12 +34,13 @@ function ViewArticle({ title, author, date, tags, image, article }) {
           />
         )}
         <div className="w-[80vw] my-5 mb-10">
-          {/* {article.split("\n").map((line, index) => (
-            <div key={index} className="text-justify"> */}
-          {ReactHtmlParser(article)}
-          {/* <br />
-            </div> */}
-          {/* ))} */}
+          {article &&
+            article.split("\n").map((line, index) => (
+              <div key={index} className="text-justify">
+                {ReactHtmlParser(line)}
+                <br />
+              </div>
+            ))}
         </div>
       </div>
     </div>

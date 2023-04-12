@@ -1,48 +1,36 @@
-import { MongoClient } from "mongodb";
-import bcrypt from "bcrypt";
+import User from "@/models/User";
+import connectDb from "@/middleware/mongoose";
+import CryptoJS from "crypto-js";
+var jwt = require("jsonwebtoken");
 
-export default async function handler(req, res) {
+const handler = async (req, res) => {
   try {
-    const { email, password } = req.body;
-    if (!isValidEmail(email)) {
-      res.status(400).json({ error: "Invalid email" });
-      return;
-    }
-    const client = await MongoClient.connect(process.env.MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      auth: {
-        username: process.env.MONGODB_USER,
-        password: process.env.MONGODB_PASS,
-      },
-    });
-    const db = client.db(process.env.MONGODB_DB);
-    const collection = db.collection("users");
-    try {
-      const user = await collection.findOne({ email });
+    if (req.method === "POST") {
+      const user = await User.findOne({ email: req.body.email });
       if (!user) {
-        res.status(401).json({ error: "Invalid email or password" });
-        return;
+        return res.status(401).json({ message: "User not found" });
       }
-      // const isPasswordValid = await bcrypt.compare(password, user.password);
-      const isPasswordValid = true;
-      if (!isPasswordValid) {
-        res.status(401).json({ error: "Invalid email or password" });
-        return;
+      const bytes = CryptoJS.AES.decrypt(
+        user.password,
+        process.env.SECRET_KEY,
+        { expiredIn: "2d" }
+      );
+      const decryptedPass = bytes.toString(CryptoJS.enc.Utf8);
+      if (req.body.password !== decryptedPass) {
+        return res.status(401).json({ message: "Invalid password" });
       }
-      res.status(200).json({ message: "Logged in", id: user._id });
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: "Server error" });
-    } finally {
-      client.close();
+      var token = jwt.sign(
+        { fullName: user.fullName, email: user.email },
+        process.env.JWT_SECRET
+      );
+      res.status(200).json({ message: "Logged in", token });
+    } else {
+      res.status(400).json({ message: "Not allowed" });
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
   }
-}
+};
 
-function isValidEmail(email) {
-  // Validate the email address using a regular expression
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test;
-}
+export default connectDb(handler);

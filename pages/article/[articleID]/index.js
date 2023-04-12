@@ -31,7 +31,7 @@ function ArticleDetail() {
         date={article.date}
         tags={article.tags}
         image={article.image}
-        article={article.content}
+        article={article.article}
       />
     </div>
   );

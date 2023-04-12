@@ -1,41 +1,30 @@
-import { MongoClient } from "mongodb";
+import User from "@/models/User";
+import connectDb from "@/middleware/mongoose";
+import { AES } from "crypto-js";
 
-export default async function handler(req, res) {
-  try {
-    const { fullName, email, password, confirmPassword } = req.body;
-    if (!isValidEmail(email)) {
-      res.status(400).json({ error: "Invalid email" });
-      return;
-    }
-    if (password !== confirmPassword) {
-      res.status(400).json({ error: "Passwords do not match" });
-      return;
-    }
-    const client = await MongoClient.connect(process.env.MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      auth: {
-        username: process.env.MONGODB_USER,
-        password: process.env.MONGODB_PASS,
-      },
-    });
-    const db = client.db(process.env.MONGODB_DB);
-    const collection = db.collection("users");
+const handler = async (req, res) => {
+  if (req.method === "POST") {
+    const { fullName, email, password } = req.body;
     try {
-      const result = await collection.insertOne({ fullName, email, password });
-      res.status(201).json({ message: "User created", id: result.insertedId });
-    } catch (err) {
-      console.error(err);
+      const existingUser = await User.findOne({ email });
+      if (existingUser) {
+        res.status(400).json({ error: "User with this email already exists" });
+        return;
+      }
+      const user = new User({
+        fullName,
+        email,
+        password: AES.encrypt(password, process.env.SECRET_KEY).toString(),
+      });
+      await user.save();
+      res.status(200).json({ message: "User Created", id: user.id });
+    } catch (error) {
+      console.error(error);
       res.status(500).json({ error: "Server error" });
-    } finally {
-      client.close();
     }
-  } catch (error) {
-    console.log(error);
+  } else {
+    res.status(400).json({ error: "Not allowed" });
   }
-}
+};
 
-function isValidEmail(email) {
-  // Validate the email address using a regular expression
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
+export default connectDb(handler);

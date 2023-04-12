@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import Router from "next/router";
 
-const Navbar = () => {
+const Navbar = ({ user, key }) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const toggle = () => setIsOpen(!isOpen);
 
@@ -111,17 +111,28 @@ const Navbar = () => {
                 />
               </div>
             </form>
-            <Link
-              href="/login"
-              className="ml-3 flex-shrink-0 px-4 py-2 border rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
-            >
-              <button>Log in</button>
-            </Link>{" "}
-            <Link href="/dashboard">
-              <button className="ml-3 flex-shrink-0 px-4 py-2 border rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">
-                Dashboard
-              </button>
-            </Link>
+            {!user.value ? (
+              <Link
+                href="/login"
+                className="ml-3 flex-shrink-0 px-4 py-2 border rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
+              >
+                <button>Log in</button>
+              </Link>
+            ) : (
+              <Link
+                href="/signout"
+                className="ml-3 flex-shrink-0 px-4 py-2 border rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
+              >
+                <button>Sign Out</button>
+              </Link>
+            )}
+            {user.value && (
+              <Link href="/dashboard">
+                <button className="ml-3 flex-shrink-0 px-4 py-2 border rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">
+                  Dashboard
+                </button>
+              </Link>
+            )}
           </div>
         </div>
       </div>
@@ -170,22 +181,35 @@ const Navbar = () => {
           </div>
         </form>
         <div className="px-2 pt-2 pb-3 flex justify-around">
-          <Link href="/login">
-            <button
-              className="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 w-44"
-              onClick={toggle}
-            >
-              Log in
-            </button>
-          </Link>
-          <Link href="/dashboard">
-            <button
-              className="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 w-44"
-              onClick={toggle}
-            >
-              Dashboard
-            </button>
-          </Link>
+          {user.value ? (
+            <Link href="/signout">
+              <button
+                className="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 w-44"
+                onClick={toggle}
+              >
+                Sign Out
+              </button>
+            </Link>
+          ) : (
+            <Link href="/login">
+              <button
+                className="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 w-44"
+                onClick={toggle}
+              >
+                Log in
+              </button>
+            </Link>
+          )}
+          {user.value && (
+            <Link href="/dashboard">
+              <button
+                className="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 w-44"
+                onClick={toggle}
+              >
+                Dashboard
+              </button>
+            </Link>
+          )}
         </div>
       </div>
     </nav>

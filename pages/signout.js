@@ -2,9 +2,9 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 
 function signout() {
+  const router = useRouter();
   useEffect(() => {
-    localStorage.removeItem("user");
-    const router = useRouter();
+    localStorage.removeItem("token");
     router.push("/");
   }, []);
 
